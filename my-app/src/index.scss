@@ -21,6 +21,7 @@ code {
 .recipe {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   margin: 30px;
   padding: 30px;
   border: solid 1px $secondary-color;
@@ -58,6 +59,10 @@ code {
 
     &--combined {
       border-radius: 10px;
+
+      img {
+        border-radius: 10px;
+      }
     }
   }
 }
