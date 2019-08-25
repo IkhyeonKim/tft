@@ -1,3 +1,7 @@
+$primary-color: #20232a;
+$primary-color-light: #60636c;
+$secondary-color: #aa9da1;
+
 body {
   margin: 0;
   padding: 0;
@@ -14,11 +18,46 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+.recipe {
+  display: flex;
+  justify-content: space-around;
+  margin: 30px;
+  padding: 30px;
+  border: solid 1px $secondary-color;
 
-.recipe__items {
-  &--round {
-    border-radius: 50%;
-    width: 52px;
-    margin-left: 15px;
+  &__items {
+    &--round {
+      border-radius: 50%;
+      width: 52px;
+      margin-left: 15px;
+      cursor: pointer;
+    }
+  }
+
+  &__box {
+    display: flex;
+    align-items: center;
+    
+    i {
+      color: $secondary-color;
+      font-size: 48px;
+    }
+    
+    &--item {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background-color: $primary-color-light;
+      margin: 0 10px;
+
+      img {
+        border-radius: 50%;
+      }
+
+    }
+
+    &--combined {
+      border-radius: 10px;
+    }
   }
 }
