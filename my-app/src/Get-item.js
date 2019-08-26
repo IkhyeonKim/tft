@@ -75,16 +75,7 @@ const getFullItems = (firstItem,secondItem) => {
         ['Giant_s_Belt', 'Frozen_Mallet'],
         ['Spatula', 'ForceOfNature']],
     ]
-
-    // [{ item: 'B_F_Sword', combined: 'Sword_of_the_Divine'}],
-    // [{ item: 'Recurve_Bow', combined: 'Rapid_FireCannon'}],
-    // [{ item: 'Chain_Vest', combined: 'Phantom_Dancer'}],
-    // [{ item: 'Negatron_Cloak', combined: 'CursedBlade'}],
-    // [{ item: 'Needlessly_Large_Rod', combined: 'Guinsoo_s_Rageblade'}],
-    // [{ item: 'Tear_of_the_Goddess', combined: 'Statikk_Shiv'}],
-    // [{ item: 'Giant_s_Belt', combined: 'Titanic_Hydra'}],
-    // [{ item: 'Spatula', combined: 'Runaan_s_Hurricane'}]
-
+    
     for(let i = 0; i< fullList.length; i += 2){ // Check item name in the array above
 
         if(fullList[i] === firstItem){
