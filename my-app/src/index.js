@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
+import getFullItems from './Get-item'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
@@ -8,7 +9,7 @@ function SingleItem(props) {
     //console.log(props.itemName[props.order])
     return (
         <div className="recipe__box--item">
-           {props.itemName[props.order] && <img src={`/img/${props.itemName[props.order]}.png`}></img>} 
+           {props.itemName[props.order] && <img alt={props.itemName[props.order]} src={`/img/${props.itemName[props.order]}.png`}></img>} 
         </div>
     )
 }
@@ -16,7 +17,7 @@ function SingleItem(props) {
 function CombinedItem(props) {
     return (
         <div className="recipe__box--item recipe__box--combined">
-            {props.newItem && <img src={`/img/${props.newItem}.png`}></img>}
+            {props.newItem && <img alt={props.newItem} src={`/img/${props.newItem}.png`}></img>}
         </div>
     )
 }
@@ -24,7 +25,7 @@ function CombinedItem(props) {
 class RecipeBox extends React.Component {
 
     render(){
-        //console.log(this.props.selectedItem)
+
         return (
             <div className="recipe__box">
                 <SingleItem 
@@ -50,8 +51,18 @@ class RecipeBox extends React.Component {
 
 
 function RecipePicture(props) {
+    const disabledImg = {
+        opacity: .3,
+        cursor: 'default'
+    }
     return(
-        <img className="recipe__items--round" src={`/img/${props.itemName}.png`} onClick={() => {props.onClick(props.itemName)}}></img>
+        <img 
+        className="recipe__items--round"
+        style={props.newItem ? disabledImg : null}
+        alt={props.itemName}
+        src={`/img/${props.itemName}.png`} 
+        onClick={() => {props.onClick(props.itemName)}}>
+        </img>
     )
 }
 
@@ -63,6 +74,7 @@ class ItemRecipes extends React.Component {
                 key={itemName}
                 itemName={itemName}
                 onClick={ this.props.onClick}
+                newItem={this.props.newItem}
             />
         )
     }
@@ -80,13 +92,24 @@ class ItemRecipes extends React.Component {
     }
 }
 
+class RecipeGuide extends React.Component {
+    render(){
+        return(
+            <div className="recipe__guide">
+                <h1>Item Recipes</h1> <button className="recipe__button" onClick={() => this.props.onClick()} >Clear</button>
+            </div>
+        )
+    }
+    // onClick={this.props.onClick} vs onClick={() => this.props.onClick()}
+}
+
 
 class TeamFightTactical extends React.Component {
     constructor(props){
         super(props)
         this.state = {
             selectedItem: Array(2).fill(null),
-            currentItem: '',
+            currentItem: null,
             newItem: null,
             baseItemList: [
                 'B_F_Sword',
@@ -100,6 +123,7 @@ class TeamFightTactical extends React.Component {
             ],
         }
         this.handleClick = this.handleClick.bind(this)
+        this.clearBoxClick = this.clearBoxClick.bind(this)
     }
 
     handleClick(itemName){
@@ -115,7 +139,6 @@ class TeamFightTactical extends React.Component {
             return
         }
         
-        console.log(selected)
         if(this.isItemBoxFull()){
             newItem = getFullItems(selected[0], selected[1])
         }
@@ -129,9 +152,16 @@ class TeamFightTactical extends React.Component {
         })
         
     }
+    clearBoxClick(){
+        console.log('clear!')
+        this.setState({
+            selectedItem: Array(2).fill(null),
+            currentItem: null,
+            newItem: null,
+        })
+    }
 
     isItemBoxFull(){
-      
         if(this.state.selectedItem[0] && this.state.selectedItem[1]){
             //newItem = getFullItems(firstItem, secondItem)
             return true
@@ -140,73 +170,31 @@ class TeamFightTactical extends React.Component {
         }
     }
 
-    
-
-    componentDidUpdate(prevProps, prevState){
-
-    }
-
     render(){   
-        //this.isItemBoxFull()
-        //this.getFullItems('B_F_Sword', 'Recurve_Bow')
+
         return (
+
             <div className="recipe">
-                <RecipeBox 
-                    selectedItem={this.state.selectedItem}
-                    newItem = {this.state.newItem}
+                <RecipeGuide
+                    onClick={this.clearBoxClick}
                 />
-                <ItemRecipes
-                    baseItemList={this.state.baseItemList}
-                    onClick={this.handleClick}
-                />
+                <div className="recipe__layout">
+                    <RecipeBox 
+                        selectedItem={this.state.selectedItem}
+                        newItem = {this.state.newItem}
+                    />
+                    <ItemRecipes
+                        baseItemList={this.state.baseItemList}
+                        onClick={this.handleClick}
+                        newItem = {this.state.newItem}
+                    />
+                </div>
             </div>
         )
     }
 }
 
-const getFullItems = (firstItem,secondItem) => {
-    let combinedItem = ''
-    const fullList = [ 
-        'B_F_Sword',
-        [['B_F_Sword', 'Infinity_Edge'],
-        ['Recurve_Bow','Sword_of_the_Divine'],
-        ['Chain_Vest', 'Guardian_Angel'],
-        ['Negatron_Cloak', 'The_Bloodthirster'],
-        ['Needlessly_Large_Rod', 'Hextech_Gunblade'],
-        ['Tear_of_the_Goddess', 'Spear_of_Shojin'],
-        ['Giant_s_Belt', 'Zeke_s_Herald'],
-        ['Spatula', 'Youmuu_s_Ghostblade']],
-        'Recurve_Bow',
-        [['B_F_Sword', 'Sword_of_the_Divine'],
-        ['Recurve_Bow', 'Rapid_FireCannon'],
-        ['Chain_Vest', 'Phantom_Dancer'],
-        ['Negatron_Cloak', 'CursedBlade'],
-        ['Needlessly_Large_Rod', 'Guinsoo_s_Rageblade'],
-        ['Tear_of_the_Goddess', 'Statikk_Shiv'],
-        ['Giant_s_Belt', 'Titanic_Hydra'],
-        ['Spatula', 'Runaan_s_Hurricane']]
-    ]
 
-    // [{ item: 'B_F_Sword', combined: 'Sword_of_the_Divine'}],
-    // [{ item: 'Recurve_Bow', combined: 'Rapid_FireCannon'}],
-    // [{ item: 'Chain_Vest', combined: 'Phantom_Dancer'}],
-    // [{ item: 'Negatron_Cloak', combined: 'CursedBlade'}],
-    // [{ item: 'Needlessly_Large_Rod', combined: 'Guinsoo_s_Rageblade'}],
-    // [{ item: 'Tear_of_the_Goddess', combined: 'Statikk_Shiv'}],
-    // [{ item: 'Giant_s_Belt', combined: 'Titanic_Hydra'}],
-    // [{ item: 'Spatula', combined: 'Runaan_s_Hurricane'}]
-
-    for(let i = 0; i< fullList.length; i += 2){ // Check item name in the array above
-
-        if(fullList[i] === firstItem){
-            combinedItem = fullList[i+1].filter( item => {
-                return item[0] === secondItem
-            })
-        }
-    }
-    
-    return combinedItem[0][1]
-}
 
 ReactDOM.render(<TeamFightTactical />, document.getElementById('root'));
 
