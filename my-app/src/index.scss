@@ -3,6 +3,9 @@ $primary-color-light: #60636c;
 $secondary-color: #aa9da1;
 $button-color: #4ec8db;
 
+$break-medium: 768px;
+$break-small: 420px;
+
 body {
   margin: 0;
   padding: 0;
@@ -42,12 +45,17 @@ code {
     display: inline-block;
     font-family: Roboto;
     transition: all ease-in-out .2s;
+
     &:hover {
       color: white;
       background-color: #148e9e;
     }
   }
   &__layout {
+    @media only screen and(max-width: $break-medium){
+      flex-direction: column;
+      margin: 10px;
+    }
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -56,24 +64,57 @@ code {
     border: solid 1px $secondary-color;
   }
   &__items {
+  
+    margin: 20px 10px;
+    @media only screen and(max-width: $break-medium){
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(52px, 1fr));
+      grid-template-rows: min-content;
+      grid-gap: 1rem;
+      justify-items: center;
+      width: 100%;
+      margin: 20px 0;
+    }
     &--round {
       border-radius: 50%;
       width: 52px;
       margin-left: 15px;
       cursor: pointer;
+      @media only screen and(max-width: $break-medium){
+        margin-left: 0;
+      }
+      @media only screen and(max-width: $break-small){
+        width: 48px;
+      }
     }
   }
 
   &__box {
     display: flex;
     align-items: center;
-    
+    margin: 20px 0;
+
     i {
       color: $secondary-color;
       font-size: 48px;
     }
-    
+    @media only screen and(max-width: $break-small) {
+      i {
+        font-size: 36px;
+      }
+    }
     &--item {
+
+      @media only screen and(max-width: $break-small){
+        width: 54px;
+        height: 54px;
+        margin: 0 7px;
+
+        img {
+          width: 54px;
+          height: 54px;
+        }
+      }
       width: 64px;
       height: 64px;
       border-radius: 50%;
