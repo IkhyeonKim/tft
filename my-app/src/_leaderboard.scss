@@ -1,5 +1,71 @@
 .leaderboard {
-    font-size: 1rem;
     color: white;
+    margin: 10px 30px 30px 30px;
+
+    h1{
+        font-size: 2rem;
+    }
     
+}
+
+.summonerInfo {
+    font-size: 1rem;
+}
+
+.summonerSearch {
+    display: flex;
+    &__input {
+        padding: 5px;
+        height: 30px;
+        width: 200px;
+    }
+
+    &__button {
+        padding: 5px;
+        text-transform: uppercase;
+        color: white;
+        background-color: #59777D;
+        border: none;
+        width: 50px;
+        i{
+            margin-top: 2px;
+            margin-left: 2px;
+        }
+    }
+}
+
+.challenger {
+    display: grid;
+    align-items: center;
+    grid-template-columns: .5fr 1.5fr repeat(4, 1fr);
+    padding: 15px 0 15px 0;
+    border-bottom: 1px solid #333;
+
+    &__span{
+        font-size: .8rem;
+        font-weight: 300;
+        justify-self: center;
+    }
+
+    &__profile {
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+
+        img{
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+        }
+
+        span {
+            font-size: .9rem;
+            margin-left: 15px;
+        }
+    }
+}
+
+.challengers {
+    display: flex;
+    flex-direction: column;
 }
