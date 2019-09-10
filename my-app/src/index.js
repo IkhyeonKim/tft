@@ -4,34 +4,88 @@ import './index.scss';
 import TeamFightTactical from './recipe'
 import axios from "axios";
 import * as serviceWorker from './serviceWorker';
-
-const apiKey = 'RGAPI-b5cb53b6-9a74-4e1e-8dcd-56703d3b8ece'
+// https://avatar.leagueoflegends.com/kr/응슷응8.png
+const apiKey = 'RGAPI-8dfb4061-82e2-4fee-a80d-16f678aebbda'
 const getIdUrl = `https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/`
 const proxyUrl = "https://cors-anywhere.herokuapp.com/"
 
 class SummonerInfo extends React.Component {
+    renderResults(profileIconName, tier) {
+
+        return (
+            <div>
+                <img alt={profileIconName} src={`https://avatar.leagueoflegends.com/kr/${profileIconName}.png`}></img>
+                <p>{tier}</p>
+            </div>
+        )
+    }
+
     render() {
         console.log(this.props.summonerInfo)
         return (
             <div>
                 {
                     this.props.stillLoading ? <p>Loading...</p> : 
-                    this.props.summonerInfo ? <p>{this.props.summonerInfo.tier}</p> : 
+                    this.props.summonerInfo ? this.renderResults(this.props.summonerName, this.props.summonerInfo.tier) : 
                     this.props.initPage ? <p>Search your summoner name!</p> : <p>Can't find {this.props.summonerName} name :(</p>
                 }
             </div>
         )
     }
 }
+class ChallengerInfo extends React.Component {
+    
+    renderChallenger(){
+        const inlineStyle = {
+            width: '36px',
+            height: '36px'
+        }
+        const challengers = this.props.challengers
+        const renderedChallenger = []
 
+        for(let i = 0; i< challengers.length; i++){
+            const challenger = challengers[i]
+            const wins = parseInt(challenger.wins)
+            const losses = parseInt(challenger.losses)
+            renderedChallenger.push(
+                (<div key={i} >
+                    {i}
+                    <img 
+                        alt={challenger.summonerName + ' profile icon'} 
+                        style={inlineStyle} 
+                        src={`https://avatar.leagueoflegends.com/kr/${challenger.summonerName}.png`}>
+                    </img>
+                    <span> {challenger.summonerName} </span>
+                    <span> {challenger.leaguePoints} </span>
+                    <span> {((wins / losses) * 100).toFixed(2) + '%'} </span>
+                    <span> {wins} </span>
+                    <span> {losses} </span>
+                    
+                </div>)
+            )
+        }
+
+        return renderedChallenger
+    }
+
+    render(){
+        return(
+            <div>
+                {this.renderChallenger()}
+            </div>
+        )
+    }
+}
 class Leaderboard extends React.Component {
     constructor(props){
         super(props)
         this.state = {
             summonerName: '',
+            summonerNameSet: '',
             summonerInfo: null,
             stillLoading: undefined,
             initPage: true,
+            challengerLeague: []
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -46,12 +100,12 @@ class Leaderboard extends React.Component {
     handleSubmit = async (event) => {
         //console.log(this.state.summonerName)
         event.preventDefault()
-        this.setState({
-            stillLoading: true
-        })
+
         const summonerNameFromForm = this.state.summonerName
-        console.log(summonerNameFromForm)
-       
+        this.setState({
+            stillLoading: true,
+            summonerNameSet: summonerNameFromForm,
+        })
         
         this.getSummonerInfo()
         // fetch(proxyurl + byName)
@@ -88,6 +142,9 @@ class Leaderboard extends React.Component {
             })
 
             max10th = challengerEntries.slice(0, 10)
+            this.setState({
+                challengerLeague: max10th
+            })
             console.log(max10th)
 
         }catch(error){
@@ -124,7 +181,7 @@ class Leaderboard extends React.Component {
                 summonerInfo: summonerInfoData[0],
                 stillLoading: false,
             })
-            console.log(summonerInfoData[0])
+            //console.log(summonerInfoData[0])
             
             }catch(error){
                 console.log(error)
@@ -158,8 +215,12 @@ class Leaderboard extends React.Component {
                 <SummonerInfo
                     stillLoading={this.state.stillLoading}
                     summonerInfo={this.state.summonerInfo}
-                    summonerName={this.state.summonerName}
+                    summonerName={this.state.summonerNameSet}
                     initPage={this.state.initPage}
+                />
+
+                <ChallengerInfo
+                    challengers={this.state.challengerLeague}
                 />
             </div>
         )
