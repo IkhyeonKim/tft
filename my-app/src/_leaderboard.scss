@@ -27,6 +27,7 @@
         background-color: #59777D;
         border: none;
         width: 50px;
+        cursor: pointer;
         i{
             margin-top: 2px;
             margin-left: 2px;
@@ -37,14 +38,20 @@
 .challenger {
     display: grid;
     align-items: center;
-    grid-template-columns: .5fr 1.5fr repeat(4, 1fr);
+    grid-template-columns: 1fr 1.5fr repeat(4, 1fr);
     padding: 15px 0 15px 0;
     border-bottom: 1px solid #333;
 
+
     &__span{
         font-size: .8rem;
-        font-weight: 300;
+        
         justify-self: center;
+
+        &--leftAlign {
+            justify-self: flex-start;
+            margin-left: 15px;
+        }
     }
 
     &__profile {
@@ -68,4 +75,12 @@
 .challengers {
     display: flex;
     flex-direction: column;
+
+    &--white {
+        margin: 20px 0;
+        color: #111;
+        background-color: white;
+        border-radius: 7px;
+        box-shadow: 0px 3px 15px rgba(0,0,0,0.5);
+    }
 }

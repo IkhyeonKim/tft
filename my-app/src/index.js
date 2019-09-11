@@ -5,7 +5,7 @@ import TeamFightTactical from './recipe'
 import axios from "axios";
 import * as serviceWorker from './serviceWorker';
 // https://avatar.leagueoflegends.com/kr/응슷응8.png
-const apiKey = 'RGAPI-5cfe28b7-ff6d-4ff7-a047-a2782dedd986'
+const apiKey = 'RGAPI-1a83ab52-d2bd-425d-a677-40934ffa4b90'
 const getIdUrl = `https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/`
 const proxyUrl = "https://cors-anywhere.herokuapp.com/"
 
@@ -19,14 +19,14 @@ class SummonerInfo extends React.Component {
             </div>
         )
     }
-
+    // this.renderResults(this.props.summonerName, this.props.summonerInfo)
     render() {
-        console.log(this.props.summonerInfo)
+        
         return (
             <section className="summonerInfo">
                 {
                     this.props.stillLoading ? <p>Loading...</p> : 
-                    this.props.summonerInfo ? this.renderResults(this.props.summonerName, this.props.summonerInfo) : 
+                    this.props.summonerInfo ? <ChallengerInfo challengers={this.props.summonerInfo} challengerOrSummoner={'summoner'} /> : 
                     this.props.initPage ? <p>Check your TFT Ranking!</p> : <p>Can't find {this.props.summonerName} name :(</p>
                 }
             </section>
@@ -36,54 +36,113 @@ class SummonerInfo extends React.Component {
 class ChallengerInfo extends React.Component {
     
     renderChallenger(){
-        const inlineStyle = {
-            margin: "10px 0 10px 0"
-        }
-        const challengers = this.props.challengers
-        const renderedChallenger = []
-        renderedChallenger.push(
-            (<div className="challenger" style={inlineStyle} key={`firstRow`} >
-                <span className="challenger__span">Rank</span>
-                <span className="challenger__span">Name</span>                
-                <span className="challenger__span"> LP </span>
-                <span className="challenger__span challenger__span--bold"> WinRate </span>
-                <span className="challenger__span"> Wins </span>
-                <span className="challenger__span"> Losses </span>
-                
-            </div>)
-        )
-        for(let i = 0; i< challengers.length; i++){
-            const challenger = challengers[i]
-            const wins = parseInt(challenger.wins)
-            const losses = parseInt(challenger.losses)
-            
+        if(this.props.challengers){
+
+            const inlineStyle = {
+                margin: "10px 0 10px 0"
+            }
+            const challengers = this.props.challengers
+            const challengerOrSummoner = this.props.challengerOrSummoner
+            const renderedChallenger = []
             renderedChallenger.push(
-                (<div className="challenger" key={i} >
-                    <span className="challenger__span">{i+1 === 1 ? (i+1)+'st' : i+1 === 2 ? (i+1)+'nd' : i+1 === 3 ? (i+1)+'rd' : (i+1)+'th'}</span>
-                    <div className="challenger__profile">
-                        <img 
-                            alt={challenger.summonerName + ' profile icon'} 
-                            src={`https://avatar.leagueoflegends.com/kr/${challenger.summonerName}.png`}>
-                        </img>
-                        <span> {challenger.summonerName} </span>
-                    </div>
-                    
-                    <span className="challenger__span"> {challenger.leaguePoints} </span>
-                    <span className="challenger__span challenger__span--bold"> {((wins / losses) * 100).toFixed(2) + '%'} </span>
-                    <span className="challenger__span"> {wins} </span>
-                    <span className="challenger__span"> {losses} </span>
+                (<div className="challenger" style={inlineStyle} key={`firstRow`} >
+                    <span className="challenger__span">{challengerOrSummoner === 'challenger' ? 'Rank' : 'Tier'}</span>
+                    <span className="challenger__span challenger__span--leftAlign">Name</span>                
+                    <span className="challenger__span"> LP </span>
+                    <span className="challenger__span challenger__span--bold"> WinRate </span>
+                    <span className="challenger__span"> Wins </span>
+                    <span className="challenger__span"> Losses </span>
                     
                 </div>)
             )
-        }
+    
+            let i = 0
+            let challenger 
+            do {
+                if(challengers.length){
+                    challenger = challengers[i]
+                }else{
+                    challenger = challengers
+                }
+                const wins = parseInt(challenger.wins)
+                const losses = parseInt(challenger.losses)
+                
+                renderedChallenger.push(
+                    (<div className="challenger" key={i} >
+                        <span className="challenger__span">
+                        { 
+                            challengerOrSummoner === 'summoner' ? 
+                            challenger.tier + ' ' + challenger.rank : i+1 === 1 ? 
+                            (i+1)+'st' : i+1 === 2 ? 
+                            (i+1)+'nd' : i+1 === 3 ? 
+                            (i+1)+'rd' : (i+1)+'th'
+                        }
+                        </span>
+                        <div className="challenger__profile">
+                            <img 
+                                alt={challenger.summonerName + ' profile icon'} 
+                                src={`https://avatar.leagueoflegends.com/kr/${challenger.summonerName}.png`}>
+                            </img>
+                            <span> {challenger.summonerName} </span>
+                        </div>
+                        
+                        <span className="challenger__span"> {challenger.leaguePoints} </span>
+                        <span className="challenger__span challenger__span--bold"> {((wins / losses) * 100).toFixed(2) + '%'} </span>
+                        <span className="challenger__span"> {wins} </span>
+                        <span className="challenger__span"> {losses} </span>
+                        
+                    </div>)
+                )
+    
+                i++
+                
+            } while (i < challengers.length);
 
-        return renderedChallenger
+            return renderedChallenger
+        }else{
+            return
+        }
+        
+        // for(let i = 0; i< challengers.length; i++){
+        //     let challenger = challengers[i]
+        //     const wins = parseInt(challenger.wins)
+        //     const losses = parseInt(challenger.losses)
+            
+        //     renderedChallenger.push(
+        //         (<div className="challenger" key={i} >
+        //             <span className="challenger__span">
+        //             { 
+        //                 challengerOrSummoner === 'summoner' ? 
+        //                 challenger.tier + ' ' + challenger.division : i+1 === 1 ? 
+        //                 (i+1)+'st' : i+1 === 2 ? 
+        //                 (i+1)+'nd' : i+1 === 3 ? 
+        //                 (i+1)+'rd' : (i+1)+'th'
+        //             }
+        //             </span>
+        //             <div className="challenger__profile">
+        //                 <img 
+        //                     alt={challenger.summonerName + ' profile icon'} 
+        //                     src={`https://avatar.leagueoflegends.com/kr/${challenger.summonerName}.png`}>
+        //                 </img>
+        //                 <span> {challenger.summonerName} </span>
+        //             </div>
+                    
+        //             <span className="challenger__span"> {challenger.leaguePoints} </span>
+        //             <span className="challenger__span challenger__span--bold"> {((wins / losses) * 100).toFixed(2) + '%'} </span>
+        //             <span className="challenger__span"> {wins} </span>
+        //             <span className="challenger__span"> {losses} </span>
+                    
+        //         </div>)
+        //     )
+        // }
+
+        
     }
 
     render(){
         return(
-            <div className="challengers">
-                {this.renderChallenger()}
+            <div className={`challengers ${this.props.challengerOrSummoner === 'summoner' ? 'challengers--white' : ''}`}>
+                {this.props.challengers ?  this.renderChallenger() : '' }
             </div>
         )
     }
@@ -157,7 +216,7 @@ class Leaderboard extends React.Component {
             this.setState({
                 challengerLeague: max10th
             })
-            console.log(max10th)
+            //console.log(max10th)
 
         }catch(error){
             console.log(error)
@@ -180,7 +239,7 @@ class Leaderboard extends React.Component {
         let summonerId = null
 
         const resultSummonerId = await this.getSummonerId()
-        console.log(resultSummonerId)
+        //console.log(resultSummonerId)
         if(resultSummonerId){
             summonerId = resultSummonerId.data.id
             const bySummonerID = `https://kr.api.riotgames.com/lol/league/v4/entries/by-summoner/${summonerId}?api_key=${apiKey}`
@@ -235,6 +294,7 @@ class Leaderboard extends React.Component {
 
                 <ChallengerInfo
                     challengers={this.state.challengerLeague}
+                    challengerOrSummoner={'challenger'}
                 />
             </section>
         )
@@ -305,13 +365,16 @@ class MyPage extends React.Component {
     }
 
     render() {
+        const gridInlineStyle = {
+            gridColumn: '2 / 3'
+        }
         return(
             <div>
                 <Tabs>
-                    <div label="Items">
+                    <div label="Items" style={gridInlineStyle}>
                         <TeamFightTactical/>
                     </div>
-                    <div label="Leaderboard">
+                    <div label="Leaderboard" style={gridInlineStyle}>
                         <Leaderboard/>
                     </div>
                 </Tabs>

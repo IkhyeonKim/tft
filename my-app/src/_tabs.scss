@@ -1,0 +1,6 @@
+.tabs {
+    &__content{
+        display: grid;
+        grid-template-columns: minmax(2rem, .2fr) 1.2fr minmax(2rem, .2fr);
+    }
+}
