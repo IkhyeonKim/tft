@@ -24,10 +24,15 @@
         padding: 5px;
         text-transform: uppercase;
         color: white;
-        background-color: #59777D;
+        background-color: $button-color;
         border: none;
         width: 50px;
         cursor: pointer;
+        transition: background-color .3s;
+
+        &:hover {
+            background-color: #59777D;
+        }
         i{
             margin-top: 2px;
             margin-left: 2px;

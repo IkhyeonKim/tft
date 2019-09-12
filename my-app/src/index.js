@@ -313,7 +313,7 @@ class Tabs extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            activeTab: this.props.children[1].props.label
+            activeTab: this.props.children[0].props.label
         }
         this.handleClick = this.handleClick.bind(this)
     }
@@ -325,9 +325,15 @@ class Tabs extends React.Component {
     }
 
     render() {
-        console.log(this.state.activeTab)
+        const styleMaxWidth = {
+            maxWidth: '1400px',
+            width: '100%',
+            boxShadow: '0px 3px 15px rgba(0,0,0,0.5)',
+            marginTop: '2rem'
+        }
+        //console.log(this.state.activeTab)
         return (
-            <div>
+            <div style={styleMaxWidth}>
                 <nav className="tabs">
                     <ul className="tabs__list">
                         {
@@ -365,29 +371,25 @@ class MyPage extends React.Component {
     }
 
     render() {
+        const flexLayout = {
+            display: 'flex',
+            justifyContent: 'center'
+        }
         const gridInlineStyle = {
             gridColumn: '2 / 3'
         }
         return(
-            <div>
+            <div style={flexLayout}>
                 <Tabs>
                     <div label="Items" style={gridInlineStyle}>
                         <TeamFightTactical/>
                     </div>
-                    <div label="Leaderboard" style={gridInlineStyle}>
+                    <div label="Leader board" style={gridInlineStyle}>
                         <Leaderboard/>
                     </div>
                 </Tabs>
             </div>
         )
-    }
-
-    componentDidMount(){
-        // axios.get(sampleURL)
-        // .then( response => {
-        //     const data = response.data
-        //     console.log(data[0])
-        // })
     }
 }
 

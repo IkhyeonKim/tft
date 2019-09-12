@@ -1,6 +1,33 @@
 .tabs {
+
     &__content{
         display: grid;
-        grid-template-columns: minmax(2rem, .2fr) 1.2fr minmax(2rem, .2fr);
+        grid-template-columns: minmax(2rem, .1fr) 1.2fr minmax(2rem, .1fr);
+        border: 1px solid white;
+        border-top: none;
+    }
+
+    &__list {
+        list-style: none;
+        display: flex;
+        font-size: 2rem;
+        justify-content: space-around;
+        margin: 0;
+        padding: 0;
+
+        li {
+            color: white;
+            background-color: $primary-color;
+            border: 1px solid white;
+            width: 50%;
+            text-align: center;
+            padding: 1rem 0;
+            cursor: pointer;
+            transition: all .3s;
+            &:hover{
+                
+                background-color: $button-color;
+            }
+        }
     }
 }
