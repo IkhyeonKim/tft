@@ -4,8 +4,8 @@ import './index.scss';
 import TeamFightTactical from './recipe'
 import axios from "axios";
 import * as serviceWorker from './serviceWorker';
-// https://avatar.leagueoflegends.com/kr/응슷응8.png
-const apiKey = 'RGAPI-1a83ab52-d2bd-425d-a677-40934ffa4b90'
+
+const apiKey = 'RGAPI-8b0c3cf5-8a50-4a06-abae-3d18e37967b9'
 const getIdUrl = `https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/`
 const proxyUrl = "https://cors-anywhere.herokuapp.com/"
 
