@@ -5,9 +5,10 @@ import TeamFightTactical from './recipe'
 import axios from "axios";
 import * as serviceWorker from './serviceWorker';
 
-const apiKey = 'RGAPI-8b0c3cf5-8a50-4a06-abae-3d18e37967b9'
+const apiKey = 'RGAPI-da9ece8d-2492-43d3-9f72-59f64265eba3'
 const getIdUrl = `https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/`
 const proxyUrl = "https://cors-anywhere.herokuapp.com/"
+
 
 class SummonerInfo extends React.Component {
     renderResults(profileIconName, summonerInfo) {
@@ -103,40 +104,6 @@ class ChallengerInfo extends React.Component {
             return
         }
         
-        // for(let i = 0; i< challengers.length; i++){
-        //     let challenger = challengers[i]
-        //     const wins = parseInt(challenger.wins)
-        //     const losses = parseInt(challenger.losses)
-            
-        //     renderedChallenger.push(
-        //         (<div className="challenger" key={i} >
-        //             <span className="challenger__span">
-        //             { 
-        //                 challengerOrSummoner === 'summoner' ? 
-        //                 challenger.tier + ' ' + challenger.division : i+1 === 1 ? 
-        //                 (i+1)+'st' : i+1 === 2 ? 
-        //                 (i+1)+'nd' : i+1 === 3 ? 
-        //                 (i+1)+'rd' : (i+1)+'th'
-        //             }
-        //             </span>
-        //             <div className="challenger__profile">
-        //                 <img 
-        //                     alt={challenger.summonerName + ' profile icon'} 
-        //                     src={`https://avatar.leagueoflegends.com/kr/${challenger.summonerName}.png`}>
-        //                 </img>
-        //                 <span> {challenger.summonerName} </span>
-        //             </div>
-                    
-        //             <span className="challenger__span"> {challenger.leaguePoints} </span>
-        //             <span className="challenger__span challenger__span--bold"> {((wins / losses) * 100).toFixed(2) + '%'} </span>
-        //             <span className="challenger__span"> {wins} </span>
-        //             <span className="challenger__span"> {losses} </span>
-                    
-        //         </div>)
-        //     )
-        // }
-
-        
     }
 
     render(){
@@ -179,25 +146,10 @@ class Leaderboard extends React.Component {
         })
         
         this.getSummonerInfo()
-        // fetch(proxyurl + byName)
-        // .then( response => {
-        //     return response.json()
-        // })
-        // .then( data => {
-        //     console.log(data)
-        // }).catch(error => console.log(error))
-
-        
+       
     }
 
     async componentDidMount(){
-        // fetch(`https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/%EC%9D%91%EC%8A%B7%EC%9D%918?api_key=${apiKey}`)
-        // .then( response => {
-        //     return response.json()
-        // })
-        // .then( data => {
-        //     console.log(data)
-        // })
 
         try{
             const challenger =  await axios.get(`${proxyUrl}https://kr.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_TFT?api_key=${apiKey}`)
@@ -216,7 +168,6 @@ class Leaderboard extends React.Component {
             this.setState({
                 challengerLeague: max10th
             })
-            //console.log(max10th)
 
         }catch(error){
             console.log(error)
@@ -228,7 +179,6 @@ class Leaderboard extends React.Component {
         const summonerNameFromForm = this.state.summonerName
         
         try{
-            //console.log(`${proxyUrl}${getIdUrl}${summonerNameFromForm}?api_key=${apiKey}`)
             return await axios.get(`${proxyUrl}${getIdUrl}${summonerNameFromForm}?api_key=${apiKey}`)
         }catch(error){
             console.log(error)

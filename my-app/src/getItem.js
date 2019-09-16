@@ -1,5 +1,5 @@
 
-const getFullItems = (firstItem,secondItem) => {
+const getFullItems = (firstItem, secondItem) => {
     let combinedItem = ''
     const fullList = [ 
         'B_F_Sword',
