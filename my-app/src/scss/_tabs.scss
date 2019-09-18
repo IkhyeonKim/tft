@@ -2,9 +2,15 @@
 
     &__content{
         display: grid;
-        grid-template-columns: minmax(2rem, .1fr) 1.2fr minmax(2rem, .1fr);
+        grid-template-columns: minmax(3rem, .1fr) 1.2fr minmax(3rem, .1fr);
         border: 1px solid white;
         border-top: none;
+        justify-content: center;
+
+        @media only screen and(max-width: $break-small){
+            font-size: 1.6rem;
+            grid-template-columns: minmax(.2rem, .1fr) 1.2fr minmax(.2rem, .1fr);
+        }
     }
 
     &__list {
@@ -14,6 +20,13 @@
         justify-content: space-around;
         margin: 0;
         padding: 0;
+
+        @media only screen and(max-width: $break-medium){
+            font-size: 1.8rem;
+        }
+        @media only screen and(max-width: $break-small){
+            font-size: 1.6rem;
+        }
 
         li {
             color: white;
