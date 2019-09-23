@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from "axios";
 
-const apiKey = 'RGAPI-d4ae2f3d-6d17-47a7-bf4e-1c5ee3d0fd49'
+const apiKey = ''
 const proxyUrl = "https://cors-anywhere.herokuapp.com/"
 const getIdUrl = `https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/`
 
