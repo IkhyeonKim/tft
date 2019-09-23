@@ -1,10 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import axios from "axios";
 
-const apiKey = 'RGAPI-b8eef867-6240-428f-a2a5-fc0dda2727e9'
-const getIdUrl = `https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/`
+const apiKey = 'RGAPI-d4ae2f3d-6d17-47a7-bf4e-1c5ee3d0fd49'
 const proxyUrl = "https://cors-anywhere.herokuapp.com/"
+const getIdUrl = `https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/`
+
 
 class SummonerInfo extends React.Component {
     renderResults(profileIconName, summonerInfo) {
@@ -118,8 +118,7 @@ class Leaderboard extends React.Component {
             summonerNameSet: '',
             summonerInfo: null,
             stillLoading: undefined,
-            initPage: true,
-            challengerLeague: []
+            initPage: true
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -239,7 +238,7 @@ class Leaderboard extends React.Component {
                 />
 
                 <ChallengerInfo
-                    challengers={this.state.challengerLeague}
+                    challengers={this.props.challengerLeague}
                     challengerOrSummoner={'challenger'}
                 />
             </section>
