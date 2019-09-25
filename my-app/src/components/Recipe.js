@@ -1,8 +1,8 @@
 import React from 'react';
-import getFullItems from './getItem'
+import getFullItems from '../utilities/getItem'
+import itemList from '../utilities/imageLoader'
 
 function SingleItem(props) {
-    //console.log(props.itemName[props.order])
     return (
         <div className="recipe__box--item">
            {props.itemName[props.order] && <img alt={props.itemName[props.order]} src={`/img/${props.itemName[props.order]}.png`}></img>} 
@@ -78,7 +78,7 @@ class ItemRecipes extends React.Component {
     render(){
         const itemPictures = []
         this.props.baseItemList.forEach( (item) => {
-            itemPictures.push(this.renderImg(item))
+            itemPictures.push(this.renderImg(item.alt))
         } )
         return (
             <div className="recipe__items">
@@ -108,16 +108,7 @@ export default class TeamFightTactical extends React.Component {
             selectedItem: Array(2).fill(null),
             currentItem: null,
             newItem: null,
-            baseItemList: [
-                'B_F_Sword',
-                'Recurve_Bow',
-                'Chain_Vest',
-                'Negatron_Cloak',
-                'Needlessly_Large_Rod',
-                'Tear_of_the_Goddess',
-                'Giant_s_Belt',
-                'Spatula'
-            ],
+            baseItemList: itemList.baseItemList,
         }
         this.handleClick = this.handleClick.bind(this)
         this.clearBoxClick = this.clearBoxClick.bind(this)
@@ -160,7 +151,6 @@ export default class TeamFightTactical extends React.Component {
 
     isItemBoxFull(){
         if(this.state.selectedItem[0] && this.state.selectedItem[1]){
-            //newItem = getFullItems(firstItem, secondItem)
             return true
         }else {
             return false

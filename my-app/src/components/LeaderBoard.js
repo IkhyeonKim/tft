@@ -1,9 +1,10 @@
 import React from 'react';
 import axios from "axios";
+import myUtilities from '../utilities/apiKey'
 
-const apiKey = ''
-const proxyUrl = "https://cors-anywhere.herokuapp.com/"
-const getIdUrl = `https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/`
+const apiKey = myUtilities.getApiKey()
+const proxyUrl = myUtilities.proxyUrl
+const getIdUrl = myUtilities.getIdUrl
 
 
 class SummonerInfo extends React.Component {
@@ -147,7 +148,7 @@ class Leaderboard extends React.Component {
     async componentDidMount(){
 
         try{
-            const challenger =  await axios.get(`${proxyUrl}https://kr.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_TFT?api_key=${apiKey}`)
+            const challenger =  await axios.get(`${proxyUrl}https://kr.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_TFT?api_key=RGAPI-cc254dad-3056-49dc-89f5-0b10b36fa2b0`)
             let max10th = []
             for(let i = 0; i < 10; i++){
                 max10th[i] = 0

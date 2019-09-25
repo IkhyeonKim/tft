@@ -5,9 +5,10 @@ import TeamFightTactical from './components/Recipe';
 import Leaderboard from './components/LeaderBoard';
 import axios from "axios";
 import * as serviceWorker from './serviceWorker';
+import myUtilities from './utilities/apiKey'
 
-const apiKey = 'RGAPI-d4ae2f3d-6d17-47a7-bf4e-1c5ee3d0fd49'
-const proxyUrl = "https://cors-anywhere.herokuapp.com/"
+const apiKey = myUtilities.getApiKey()
+const proxyUrl = myUtilities.proxyUrl
 
 function Tab(props) {
     return(
