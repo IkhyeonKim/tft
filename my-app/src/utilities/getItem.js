@@ -4,7 +4,7 @@ const getFullItems = (firstItem, secondItem) => {
     const fullList = [ 
         'B_F_Sword',
         [['B_F_Sword', 'LordsEdge'],
-        ['Recurve_Bow','Sword_of_the_Divine'],
+        ['Recurve_Bow','GiantSlayer'],
         ['Chain_Vest', 'Guardian_Angel'],
         ['Negatron_Cloak', 'The_Bloodthirster'],
         ['Needlessly_Large_Rod', 'Hextech_Gunblade'],
@@ -13,7 +13,7 @@ const getFullItems = (firstItem, secondItem) => {
         ['Spatula', 'Youmuu_s_Ghostblade'],
         ['SparingGloves', 'Infinity_Edge']],
         'Recurve_Bow',
-        [['B_F_Sword', 'Sword_of_the_Divine'],
+        [['B_F_Sword', 'GiantSlayer'],
         ['Recurve_Bow', 'Rapid_FireCannon'],
         ['Chain_Vest', 'Phantom_Dancer'],
         ['Negatron_Cloak', 'CursedBlade'],
