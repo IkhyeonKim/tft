@@ -85,7 +85,7 @@ class ChallengerInfo extends React.Component {
                         </div>
                         
                         <span className="challenger__span"> {challenger.leaguePoints} </span>
-                        <span className="challenger__span challenger__span--bold"> {((wins / losses) * 100).toFixed(2) + '%'} </span>
+                        <span className="challenger__span challenger__span--bold"> {((wins / losses) * 100).toFixed(1) + '%'} </span>
                         <span className="challenger__span"> {wins} </span>
                         <span className="challenger__span"> {losses} </span>
                         
@@ -118,6 +118,7 @@ class Leaderboard extends React.Component {
             summonerName: '',
             summonerNameSet: '',
             summonerInfo: null,
+            summonerProfileIconId: '',
             stillLoading: undefined,
             initPage: true
         }
@@ -141,50 +142,23 @@ class Leaderboard extends React.Component {
             summonerNameSet: summonerNameFromForm,
         })
         
-        this.getSummonerInfo()
+        this.getSummonerInfo(summonerNameFromForm)
        
     }
 
-    async componentDidMount(){
-
+    async getSummonerId(summonerName) {
+    
         try{
-            const challenger =  await axios.get(`${proxyUrl}https://kr.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_TFT?api_key=RGAPI-cc254dad-3056-49dc-89f5-0b10b36fa2b0`)
-            let max10th = []
-            for(let i = 0; i < 10; i++){
-                max10th[i] = 0
-            }
-
-            const challengerEntries = challenger.data.entries
-
-            challengerEntries.sort( (a,b) => {
-                return b.leaguePoints - a.leaguePoints
-            })
-
-            max10th = challengerEntries.slice(0, 10)
-            this.setState({
-                challengerLeague: max10th
-            })
-
-        }catch(error){
-            console.log(error)
-        }
-
-    }
-
-    async getSummonerId() {
-        const summonerNameFromForm = this.state.summonerName
-        
-        try{
-            return await axios.get(`${proxyUrl}${getIdUrl}${summonerNameFromForm}?api_key=${apiKey}`)
+            return await axios.get(`${proxyUrl}${getIdUrl}${summonerName}?api_key=${apiKey}`)
         }catch(error){
             console.log(error)
         }
     }
 
-    async getSummonerInfo(){
+    async getSummonerInfo(summonerName){
         let summonerId = null
 
-        const resultSummonerId = await this.getSummonerId()
+        const resultSummonerId = await this.getSummonerId(summonerName)
         //console.log(resultSummonerId)
         if(resultSummonerId){
             summonerId = resultSummonerId.data.id
@@ -196,6 +170,7 @@ class Leaderboard extends React.Component {
             })
             this.setState({
                 summonerInfo: summonerInfoData[0],
+                summonerProfileIconId: resultSummonerId.data.profileIconId,
                 stillLoading: false,
             })
             //console.log(summonerInfoData[0])
@@ -214,8 +189,7 @@ class Leaderboard extends React.Component {
 
 
     }
-    //<i class="material-icons">search</i>
-    //<input className="summonerSearch__button" type="submit" value="Search"/>
+
     render(){
         return (
             <section className="leaderboard">

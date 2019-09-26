@@ -80,27 +80,29 @@ class MyPage extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            challengerLeague: []
+            challengerLeague: [],
+            challengersProfileIcon: []
         }
     }
     async componentDidMount(){
 
         try{
             const challenger =  await axios.get(`${proxyUrl}https://kr.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_TFT?api_key=${apiKey}`)
-            let max10th = []
+            let topTenPlayers = []
+
             for(let i = 0; i < 10; i++){
-                max10th[i] = 0
+                topTenPlayers[i] = 0
             }
 
             const challengerEntries = challenger.data.entries
-
             challengerEntries.sort( (a,b) => {
                 return b.leaguePoints - a.leaguePoints
             })
 
-            max10th = challengerEntries.slice(0, 10)
+            topTenPlayers = challengerEntries.slice(0, 10)
+
             this.setState({
-                challengerLeague: max10th
+                challengerLeague: topTenPlayers,
             })
 
         }catch(error){
@@ -138,4 +140,4 @@ class MyPage extends React.Component {
 
 ReactDOM.render(<MyPage />, document.getElementById('root'));
 
-serviceWorker.register();
+serviceWorker.unregister();

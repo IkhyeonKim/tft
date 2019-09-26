@@ -98,4 +98,12 @@ const setItemList = [
     { src:'/img/HandofJustice.png', alt: 'HandofJustice'},
 ]
 
-export default {baseItemList, setItemList}
+const getBaseItemList = () => {
+    return baseItemList
+}
+
+const getSetItemList = () => {
+    return setItemList
+}
+
+export default {getBaseItemList, getSetItemList}

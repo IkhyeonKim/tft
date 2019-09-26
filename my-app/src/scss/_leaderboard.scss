@@ -63,6 +63,9 @@
         &--leftAlign {
             justify-self: flex-start;
             margin-left: 15px;
+            @media only screen and(max-width: $break-medium){
+                justify-self: center;
+            }
         }
     }
 

@@ -108,7 +108,7 @@ export default class TeamFightTactical extends React.Component {
             selectedItem: Array(2).fill(null),
             currentItem: null,
             newItem: null,
-            baseItemList: itemList.baseItemList,
+            baseItemList: itemList.getBaseItemList(),
         }
         this.handleClick = this.handleClick.bind(this)
         this.clearBoxClick = this.clearBoxClick.bind(this)
